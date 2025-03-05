@@ -28,18 +28,23 @@ router.get('/',  function(req, res, next) {
   res.render('index', { title: 'Express' });
 });
 
-router.get('/habits', async (req, res) => {
+router.get('/habits', authenticateToken, async (req, res) => {
   try{
-    const habits = await Habit.find();
+    let userId  = req.user && req.user.userId ? req.user.userId: res.status(500).json({ message: 'Error retrieving habits' });;
+    console.log(req.user.userId);
+    const habits = await Habit.find({'userId': new mongoose.Types.ObjectId(userId)});
     res.json(habits);
   }catch(err){
+    console.error(err);
     res.status(500).json({ message: 'Error retrieving habits' });
   }
 
 });
 router.post('/habits', authenticateToken, async (req, res) => {
   try{
-    let { title, description, userId } = req.body;
+    console.log(req.body);
+    let { title, description} = req.body;
+    let userId  = req.user && req.user.userId ? req.user.userId: res.status(500).json({ message: 'Error retrieving habits' });;
     userId =  new mongoose.Types.ObjectId(userId);
     const habit = new Habit({ title, description, userId });
     await habit.save();

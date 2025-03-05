@@ -41,7 +41,12 @@ router.post('/login', async function(req, res, next) {
 
     // Generar un JWT para la sesión
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
-
+    res.cookie('habitToken', token, {
+      httpOnly: false, // Previene acceso desde JavaScript (XSS)
+      secure: process.env.NODE_ENV === 'production', // Solo en HTTPS en producción
+      sameSite: 'Strict', // Evita envío en otros sitios
+      maxAge: 7 * (24) * 60 * 60 * 1000 // 7 días de duración
+  });
     res.json({ message: "Inicio de sesión exitoso", token });
 } catch (error) {
     res.status(500).json({ error: "Error en el login", "description":error.toString() });
