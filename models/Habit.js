@@ -22,7 +22,7 @@ const habitSchema = new mongoose.Schema({
     },
     days:{
         type: Number,
-        default: 1
+        default: 0
     },
     startedAt: {
         type: Date,
