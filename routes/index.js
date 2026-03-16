@@ -14,10 +14,10 @@ const authenticateToken = (req, res, next) => {
   }
 
   try {
-      const tokenWithoutBearer = token.replace("Bearer ", ""); // Remover el prefijo "Bearer "
+      const tokenWithoutBearer = token.replace("Bearer ", ""); 
       const verified = jwt.verify(tokenWithoutBearer, process.env.JWT_SECRET);
-      req.user = verified; // Guardar los datos del usuario en `req.user`
-      next(); // Continuar con la siguiente función en la ruta
+      req.user = verified; 
+      next(); 
   } catch (error) {
       console.error(error);
       res.status(403).json({ error: "Token inválido o expirado" });
