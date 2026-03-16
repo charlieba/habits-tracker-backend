@@ -72,8 +72,9 @@ router.patch('/habits/markasdone/:id', authenticateToken,  async (req, res) => {
       habit.save();
       res.status(200).json({'message': 'Habit marked as done'});
     }else{
-      habit.days = 1;
+      habit.days = 0;
       habit.lastUpdate = new Date();
+      habit.startedAt = new Date();
       habit.save();
       res.status(200).json({'message': 'Habit restarted'});
     }
