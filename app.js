@@ -11,8 +11,8 @@ var usersRouter = require('./routes/users');
 
 var app = express();
 app.use(cors({
-  origin:'http://localhost:3000',
-  credentials:true 
+  origin: "http://localhost:5173",
+  credentials: true
 }));
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
