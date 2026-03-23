@@ -42,7 +42,7 @@ router.post('/login', async function(req, res, next) {
     res.cookie("habitToken", token, {
       httpOnly: true,
       secure: true,
-      sameSite: "none",
+      sameSite: "None", 
       maxAge: 7 * 24 * 60 * 60 * 1000
     });
     res.json({ message: "Inicio de sesión exitoso", token });
